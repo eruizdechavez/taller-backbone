@@ -1,0 +1,36 @@
+.tweets {
+	float: left;
+	width: 480px;
+	padding: 0;
+	margin: 10px;
+	display: none;
+}
+
+.tweets-ul {
+	padding: 0;
+	height: 320px;
+	overflow: auto;
+}
+
+.tweet {
+	display: none;
+	border-bottom: 1px solid black;
+	list-style-type: none;
+}
+
+.author {
+	font-weight: bold;
+}
+
+.selected {
+	background-color: #bada55;
+}
+
+.title-edit {
+	display: none;
+}
+
+.templates {
+	display: none;
+	visibility: hidden;
+}

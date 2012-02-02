@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Backbone</title>
+	<link rel="stylesheet" type="text/css" href="style.css" />
+</head>
+<body>
+
+	<!-- Search box and instructions -->
+	<div class="search">
+		<input type="text" class="query" placeholder="Search string" />
+		<button class="add">Add Search</button>
+		<p><em>Instructions:</em> Search form something on Twitter. Each search will open a self-updating box.</p>
+	</div>
+	
+	<!-- Search boxes container -->
+	<div class="lists"></div>
+
+	<!-- Templates. This is hidden to the user and will be userd programatically -->
+	<div class="templates">
+		<!-- Tweet template. Each tweet will use this template -->
+		<div template="tweet">
+			<span class="author">{{from_user}}</span>: <span class="text">{{text}}</span>
+		</div>
+
+		<!-- Search Box template. -->
+		<div template="tweetsearch">
+			<div class="title">
+				Searching for: <span class="term">{{query}}</span>
+				<button class="edit">Edit</button>
+				<button class="delete">Delete</button>
+			</div>
+			<div class="title-edit">
+				Searching for: <input type="text" class="term-edit"/>
+				<button class="save">Save</button>
+				<button class="cancel">Cancel</button>
+			</div>
+			<div>Found: <span class="found">0</span></div>
+			<div>Displaying last {{rpp}} {{resultType}} tweets each {{refreshInterval}} milliseconds</div>
+			<ul class="tweets-ul"></ul>
+		</div>
+	</div>
+
+	<!-- Scripts -->
+	<script type="text/javascript" src="jquery-1.7.1.js"></script>
+	<script type="text/javascript" src="underscore.js"></script>
+	<script type="text/javascript" src="backbone.js"></script>
+	<script type="text/javascript" src="mustache.js"></script>
+	<script type="text/javascript" src="main.min.js"></script>
+</body>
+</html>
