@@ -127,7 +127,6 @@
 			// Views by default receive and set some contructor parameters
 			// like model, el, tagName and className; we can pass whatever
 			// we like on the constructor and read it from "options"
-
 			// This time, we take all non-default options from the constructor
 			// and set them as our model.
 			this.model = new TweetSearchModel(this.options);
@@ -194,7 +193,7 @@
 			// Save most recent id for next request
 			this.model.set("sinceId", data.max_id);
 
-			
+
 			// _.each is more flexible than $.each cause _.each allows to 
 			// save "this" and access is inside the loop.
 			_.each(data.results, function(item) {
