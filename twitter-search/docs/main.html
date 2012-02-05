@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <title>main.js</title>
+  <link rel="stylesheet" href="pycco.css">
+</head>
+<body>
+<div id="background"></div>
+<div id='container'>
+  
+  <div class='section'>
+    <div class='docs'><h1>main.js</h1></div>
+  </div>
+  <div class='clearall'>
+  <div class='section' id='section-0'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-0'>#</a>
+      </div>
+      
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">$</span><span class="p">)</span> <span class="p">{</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-1'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-1'>#</a>
+      </div>
+      <p>A tweet model. Represents the data of each tweet.
+Properties from Twitter API</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>	<span class="kd">var</span> <span class="nx">TweetModel</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Model</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+		<span class="nx">defaults</span><span class="o">:</span> <span class="p">{</span>
+			<span class="nx">created_at</span><span class="o">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+			<span class="nx">from_user</span><span class="o">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+			<span class="nx">from_user_id</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span>
+			<span class="nx">from_user_id_str</span><span class="o">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+			<span class="nx">from_user_name</span><span class="o">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+			<span class="nx">geo</span><span class="o">:</span> <span class="kc">null</span><span class="p">,</span>
+			<span class="nx">id</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span>
+			<span class="nx">id_str</span><span class="o">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+			<span class="nx">iso_language_code</span><span class="o">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+			<span class="nx">metadata</span><span class="o">:</span> <span class="p">{},</span>
+			<span class="nx">profile_image_url</span><span class="o">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+			<span class="nx">profile_image_url_https</span><span class="o">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+			<span class="nx">source</span><span class="o">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+			<span class="nx">text</span><span class="o">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+			<span class="nx">to_user</span><span class="o">:</span> <span class="kc">null</span><span class="p">,</span>
+			<span class="nx">to_user_id</span><span class="o">:</span> <span class="kc">null</span><span class="p">,</span>
+			<span class="nx">to_user_id_str</span><span class="o">:</span> <span class="kc">null</span><span class="p">,</span>
+			<span class="nx">to_user_name</span><span class="o">:</span> <span class="kc">null</span>
+		<span class="p">}</span>
+	<span class="p">});</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-2'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-2'>#</a>
+      </div>
+      <p>A collection of Tweets</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>	<span class="kd">var</span> <span class="nx">TweetCollection</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Collection</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-3'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-3'>#</a>
+      </div>
+      <p>By setting a model, all raw objects will be 
+automatically transformed on instances of provided model.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>		<span class="nx">model</span><span class="o">:</span> <span class="nx">TweetModel</span>
+	<span class="p">});</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-4'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-4'>#</a>
+      </div>
+      <p>Visual representation of a Tweet (UI)</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>	<span class="kd">var</span> <span class="nx">TweetView</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-5'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-5'>#</a>
+      </div>
+      <p>HTML Tag node</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>		<span class="nx">tagName</span><span class="o">:</span> <span class="s2">&quot;li&quot;</span><span class="p">,</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-6'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-6'>#</a>
+      </div>
+      <p>Class name for our HTML Tag</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>		<span class="nx">className</span><span class="o">:</span> <span class="s2">&quot;tweet&quot;</span><span class="p">,</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-7'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-7'>#</a>
+      </div>
+      <p>Template placeholder</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>		<span class="nx">template</span><span class="o">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-8'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-8'>#</a>
+      </div>
+      <p>Constructor of the view</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>		<span class="nx">initialize</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-9'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-9'>#</a>
+      </div>
+      <p>This Underscore method will save the reference of "this"
+to all methods of this class, including event handlers, 
+AJAX responses, etc. Really handy 8)!</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>			<span class="nx">_</span><span class="p">.</span><span class="nx">bindAll</span><span class="p">(</span><span class="k">this</span><span class="p">);</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-10'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-10'>#</a>
+      </div>
+      <p>Read the template from the HTML to keep JavaScript code
+organized, clean and readable</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>			<span class="k">this</span><span class="p">.</span><span class="nx">template</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;[template=&#39;tweet&#39;]&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">().</span><span class="nx">trim</span><span class="p">();</span>
+		<span class="p">},</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-11'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-11'>#</a>
+      </div>
+      <p>Declarative events</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>		<span class="nx">events</span><span class="o">:</span> <span class="p">{</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-12'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-12'>#</a>
+      </div>
+      <p>"event selector(optional)" : "methodName"</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>			<span class="s2">&quot;click&quot;</span><span class="o">:</span> <span class="s2">&quot;select&quot;</span>
+		<span class="p">},</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-13'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-13'>#</a>
+      </div>
+      <p>A click handler</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>		<span class="nx">select</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+			<span class="k">this</span><span class="p">.</span><span class="nx">$el</span><span class="p">.</span><span class="nx">toggleClass</span><span class="p">(</span><span class="s2">&quot;selected&quot;</span><span class="p">);</span>
+		<span class="p">},</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-14'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-14'>#</a>
+      </div>
+      <p>Show time! Use our data model and create a visual
+representation for the user.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>		<span class="nx">render</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-15'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-15'>#</a>
+      </div>
+      <p>Use Mustache to render our template and provide it our
+model as a plain object :{D</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>			<span class="k">this</span><span class="p">.</span><span class="nx">$el</span><span class="p">.</span><span class="nx">html</span><span class="p">(</span><span class="nx">Mustache</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">template</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">model</span><span class="p">.</span><span class="nx">toJSON</span><span class="p">()));</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-16'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-16'>#</a>
+      </div>
+      <p>Delegate events each time render is called, otherwise we'll 
+lose functionality</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>			<span class="k">this</span><span class="p">.</span><span class="nx">delegateEvents</span><span class="p">();</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-17'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-17'>#</a>
+      </div>
+      <p>It is a good practice to return "this" on render, so others
+chan chain the render and read the "el" on one line</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>			<span class="k">return</span> <span class="k">this</span><span class="p">;</span>
+		<span class="p">}</span>
+	<span class="p">});</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-18'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-18'>#</a>
+      </div>
+      <p>A model for our search view? Yes!</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>	<span class="kd">var</span> <span class="nx">TweetSearchModel</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Model</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+		<span class="nx">defaults</span><span class="o">:</span> <span class="p">{</span>
+			<span class="nx">query</span><span class="o">:</span> <span class="kc">null</span><span class="p">,</span>
+			<span class="nx">sinceId</span><span class="o">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+			<span class="nx">rpp</span><span class="o">:</span> <span class="mi">10</span><span class="p">,</span>
+			<span class="nx">resultType</span><span class="o">:</span> <span class="s2">&quot;popular&quot;</span><span class="p">,</span>
+			<span class="nx">refreshInterval</span><span class="o">:</span> <span class="mi">10000</span><span class="p">,</span>
+			<span class="nx">template</span><span class="o">:</span> <span class="s2">&quot;&quot;</span>
+		<span class="p">}</span>
+	<span class="p">});</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-19'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-19'>#</a>
+      </div>
+      <p>TweetSearch view</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>	<span class="kd">var</span> <span class="nx">TweetSearch</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-20'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-20'>#</a>
+      </div>
+      <p>Some properties to aid us here and there ;)</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>		<span class="nx">className</span><span class="o">:</span> <span class="s2">&quot;tweets&quot;</span><span class="p">,</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-21'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-21'>#</a>
+      </div>
+      <p>TweetCollection placeholder</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>		<span class="nx">collection</span><span class="o">:</span> <span class="kc">null</span><span class="p">,</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-22'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-22'>#</a>
+      </div>
+      <p>Declarative events</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>		<span class="nx">events</span><span class="o">:</span> <span class="p">{</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-23'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-23'>#</a>
+      </div>
+      <p>"event selector(optional)" : "methodName"</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>			<span class="s2">&quot;click .title .edit&quot;</span><span class="o">:</span> <span class="s2">&quot;editQuery&quot;</span><span class="p">,</span>
+			<span class="s2">&quot;click .title .delete&quot;</span><span class="o">:</span> <span class="s2">&quot;deleteSearch&quot;</span><span class="p">,</span>
+			<span class="s2">&quot;click .title-edit .save&quot;</span><span class="o">:</span> <span class="s2">&quot;saveEdit&quot;</span><span class="p">,</span>
+			<span class="s2">&quot;click .title-edit .cancel&quot;</span><span class="o">:</span> <span class="s2">&quot;cancelEdit&quot;</span>
+		<span class="p">},</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-24'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-24'>#</a>
+      </div>
+      <p>Constructor of the view</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>		<span class="nx">initialize</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-25'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-25'>#</a>
+      </div>
+      <p>This Underscore method will save the reference of "this"
+to all methods of this class, including event handlers, 
+AJAX responses, etc. Really handy 8)!</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>			<span class="nx">_</span><span class="p">.</span><span class="nx">bindAll</span><span class="p">(</span><span class="k">this</span><span class="p">);</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-26'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-26'>#</a>
+      </div>
+      <p>No query, no search :(</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>			<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">hasOwnProperty</span><span class="p">(</span><span class="s2">&quot;query&quot;</span><span class="p">))</span> <span class="p">{</span>
+				<span class="k">throw</span> <span class="s2">&quot;Cannot create a Search without a query string&quot;</span><span class="p">;</span>
+			<span class="p">}</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-27'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-27'>#</a>
+      </div>
+      <p>Views by default receive and set some contructor parameters
+like model, el, tagName and className; we can pass whatever
+we like on the constructor and read it from "options"
+This time, we take all non-default options from the constructor
+and set them as our model.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>			<span class="k">this</span><span class="p">.</span><span class="nx">model</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">TweetSearchModel</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">);</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-28'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-28'>#</a>
+      </div>
+      <p>Initialize our model events</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>			<span class="k">this</span><span class="p">.</span><span class="nx">model</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;change:query change:template&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">render</span><span class="p">);</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-29'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-29'>#</a>
+      </div>
+      <p>Initialize our collection and its events</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>			<span class="k">this</span><span class="p">.</span><span class="nx">collection</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">TweetCollection</span><span class="p">();</span>
+			<span class="k">this</span><span class="p">.</span><span class="nx">collection</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;add&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">addOne</span><span class="p">);</span>
+			<span class="k">this</span><span class="p">.</span><span class="nx">collection</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;remove&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">removeOne</span><span class="p">);</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-30'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-30'>#</a>
+      </div>
+      <p>What? many events? Yes, in this case we want to catch 'em all!</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>			<span class="k">this</span><span class="p">.</span><span class="nx">collection</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;add reset remove&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">updateCounter</span><span class="p">);</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-31'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-31'>#</a>
+      </div>
+      <p>Start the party!</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>			<span class="k">this</span><span class="p">.</span><span class="nx">getTweets</span><span class="p">();</span>
+		<span class="p">},</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-32'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-32'>#</a>
+      </div>
+      <p>Get some data to display</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>		<span class="nx">getTweets</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-33'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-33'>#</a>
+      </div>
+      <p>No query? :( No loop!</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>			<span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">model</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">&quot;query&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
+				<span class="k">return</span><span class="p">;</span>
+			<span class="p">}</span>
+
+			<span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-34'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-34'>#</a>
+      </div>
+      <p>Info at: https://dev.twitter.com/docs/api/1/get/search</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>				<span class="nx">url</span><span class="o">:</span> <span class="s2">&quot;http://search.twitter.com/search.json&quot;</span><span class="p">,</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-35'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-35'>#</a>
+      </div>
+      <p>Cross-domain GET request? No problem, use JSONP :D</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>				<span class="nx">dataType</span><span class="o">:</span> <span class="s2">&quot;jsonp&quot;</span><span class="p">,</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-36'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-36'>#</a>
+      </div>
+      <p>Feed the API with some parameters ...</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>				<span class="nx">data</span><span class="o">:</span> <span class="p">{</span>
+					<span class="nx">q</span><span class="o">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">model</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">&quot;query&quot;</span><span class="p">),</span>
+					<span class="nx">since_id</span><span class="o">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">model</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">&quot;sinceId&quot;</span><span class="p">),</span>
+					<span class="nx">rpp</span><span class="o">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">model</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">&quot;rpp&quot;</span><span class="p">),</span>
+					<span class="nx">result_type</span><span class="o">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">model</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">&quot;resultType&quot;</span><span class="p">)</span>
+				<span class="p">},</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-37'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-37'>#</a>
+      </div>
+      <p>And handle the response</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>				<span class="nx">success</span><span class="o">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">getTweetsSuccess</span>
+			<span class="p">});</span>
+		<span class="p">},</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-38'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-38'>#</a>
+      </div>
+      <p>More gests to the party? Let them in!</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>		<span class="nx">getTweetsSuccess</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-39'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-39'>#</a>
+      </div>
+      <p>Here, "this" is not the DOM nor the AJAX object, "this"
+is our view because we saved the scope on the constructor
+using <em>.bindAll(this). I &lt;3 </em>.bindAll
+Error present? Oops! :'(</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>			<span class="k">if</span> <span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">hasOwnProperty</span><span class="p">(</span><span class="s2">&quot;error&quot;</span><span class="p">))</span> <span class="p">{</span>
+				<span class="k">throw</span> <span class="s2">&quot;API Error:&quot;</span> <span class="o">+</span> <span class="nx">data</span><span class="p">.</span><span class="nx">error</span><span class="p">;</span>
+			<span class="p">}</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-40'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-40'>#</a>
+      </div>
+      <p>Sort results so we can add 'em on the right order on 
+our views</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>			<span class="nx">data</span><span class="p">.</span><span class="nx">results</span> <span class="o">=</span> <span class="nx">_</span><span class="p">.</span><span class="nx">sortBy</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">results</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">item</span><span class="p">)</span> <span class="p">{</span>
+				<span class="k">return</span> <span class="nx">item</span><span class="p">.</span><span class="nx">id</span><span class="p">;</span>
+			<span class="p">});</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-41'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-41'>#</a>
+      </div>
+      <p>Save most recent id for next request</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>			<span class="k">this</span><span class="p">.</span><span class="nx">model</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s2">&quot;sinceId&quot;</span><span class="p">,</span> <span class="nx">data</span><span class="p">.</span><span class="nx">max_id</span><span class="p">);</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-42'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-42'>#</a>
+      </div>
+      <p><em>.each is more flexible than $.each cause </em>.each allows to 
+save "this" and access is inside the loop.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>			<span class="nx">_</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">results</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">item</span><span class="p">)</span> <span class="p">{</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-43'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-43'>#</a>
+      </div>
+      <p>Add new models to the collection. 
+Backbone Collections do not like duplicated IDs, hence
+watch for duplicated ids (API Cache).</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>				<span class="k">try</span> <span class="p">{</span>
+					<span class="k">this</span><span class="p">.</span><span class="nx">collection</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">item</span><span class="p">);</span>
+				<span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-44'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-44'>#</a>
+      </div>
+      <p>TODO: Add some code to handle errors here.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>				<span class="p">}</span>
+			<span class="p">},</span> <span class="k">this</span><span class="p">);</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-45'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-45'>#</a>
+      </div>
+      <p>Schedule a new fetch</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>			<span class="nx">setTimeout</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">getTweets</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">model</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">&quot;refreshInterval&quot;</span><span class="p">));</span>
+		<span class="p">},</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-46'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-46'>#</a>
+      </div>
+      <p>Each add to our collection is binded here. We'll receive 1 
+item at a time</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>		<span class="nx">addOne</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">item</span><span class="p">)</span> <span class="p">{</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-47'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-47'>#</a>
+      </div>
+      <p>No view on our model? Create one and save it for later</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>			<span class="k">if</span> <span class="p">(</span><span class="nx">item</span><span class="p">.</span><span class="nx">view</span> <span class="o">==</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
+				<span class="nx">item</span><span class="p">.</span><span class="nx">view</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">TweetView</span><span class="p">({</span>
+					<span class="nx">model</span><span class="o">:</span> <span class="nx">item</span>
+				<span class="p">});</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-48'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-48'>#</a>
+      </div>
+      <p>Render newly created view</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>				<span class="nx">item</span><span class="p">.</span><span class="nx">view</span><span class="p">.</span><span class="nx">render</span><span class="p">();</span>
+			<span class="p">}</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-49'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-49'>#</a>
+      </div>
+      <p>Prepend our view to the DOM</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>			<span class="k">this</span><span class="p">.</span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;.tweets-ul&quot;</span><span class="p">).</span><span class="nx">prepend</span><span class="p">(</span><span class="nx">item</span><span class="p">.</span><span class="nx">view</span><span class="p">.</span><span class="nx">el</span><span class="p">);</span>
+			<span class="nx">item</span><span class="p">.</span><span class="nx">view</span><span class="p">.</span><span class="nx">$el</span><span class="p">.</span><span class="nx">slideDown</span><span class="p">();</span>
+		<span class="p">},</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-50'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-50'>#</a>
+      </div>
+      <p>Each remove to our collection is binded here. We'll receive 1 
+item at a time</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>		<span class="nx">removeOne</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">item</span><span class="p">)</span> <span class="p">{</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-51'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-51'>#</a>
+      </div>
+      <p>Just in case we had items on our collection that didn't
+get a view</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>			<span class="k">if</span> <span class="p">(</span><span class="nx">item</span><span class="p">.</span><span class="nx">view</span> <span class="o">!=</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-52'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-52'>#</a>
+      </div>
+      <p>Remove the view from the DOM</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>				<span class="nx">item</span><span class="p">.</span><span class="nx">view</span><span class="p">.</span><span class="nx">remove</span><span class="p">();</span>
+			<span class="p">}</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-53'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-53'>#</a>
+      </div>
+      <p>And remove the properties from the Model</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>			<span class="nx">item</span><span class="p">.</span><span class="nx">clear</span><span class="p">();</span>
+		<span class="p">},</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-54'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-54'>#</a>
+      </div>
+      <p>Time to see the result of our hard work</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>		<span class="nx">render</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-55'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-55'>#</a>
+      </div>
+      <p>Use Mustache to render our template and provide it our
+model as a plain object :{D
+Notice we are just rendering the container. Each tweet
+rendering is handled appart.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>			<span class="k">this</span><span class="p">.</span><span class="nx">$el</span><span class="p">.</span><span class="nx">html</span><span class="p">(</span><span class="nx">Mustache</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">model</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">&quot;template&quot;</span><span class="p">),</span> <span class="k">this</span><span class="p">.</span><span class="nx">model</span><span class="p">.</span><span class="nx">toJSON</span><span class="p">()));</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-56'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-56'>#</a>
+      </div>
+      <p>Our model here is a Backbone Collection and those have _ 
+methods proxied, so we use collection.each instead of 
+_.each(collection)</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>			<span class="k">this</span><span class="p">.</span><span class="nx">delegateEvents</span><span class="p">();</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-57'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-57'>#</a>
+      </div>
+      <p>It is a good practice to return "this" on render, so others
+chan chain the render and read the "el" on one line</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>			<span class="k">return</span> <span class="k">this</span><span class="p">;</span>
+		<span class="p">},</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-58'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-58'>#</a>
+      </div>
+      <p>Handle click on edit button</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>		<span class="nx">editQuery</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+			<span class="k">this</span><span class="p">.</span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;.term-edit&quot;</span><span class="p">).</span><span class="nx">val</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">model</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">&quot;query&quot;</span><span class="p">));</span>
+			<span class="k">this</span><span class="p">.</span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;.title-edit&quot;</span><span class="p">).</span><span class="nx">show</span><span class="p">();</span>
+			<span class="k">this</span><span class="p">.</span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;.title&quot;</span><span class="p">).</span><span class="nx">hide</span><span class="p">();</span>
+		<span class="p">},</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-59'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-59'>#</a>
+      </div>
+      <p>Handle click on cancel button</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>		<span class="nx">cancelEdit</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+			<span class="k">this</span><span class="p">.</span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;.title-edit&quot;</span><span class="p">).</span><span class="nx">hide</span><span class="p">();</span>
+			<span class="k">this</span><span class="p">.</span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;.title&quot;</span><span class="p">).</span><span class="nx">show</span><span class="p">();</span>
+		<span class="p">},</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-60'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-60'>#</a>
+      </div>
+      <p>Handle click on save button</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>		<span class="nx">saveEdit</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+			<span class="k">this</span><span class="p">.</span><span class="nx">model</span><span class="p">.</span><span class="nx">set</span><span class="p">({</span>
+				<span class="nx">query</span><span class="o">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;.term-edit&quot;</span><span class="p">).</span><span class="nx">val</span><span class="p">(),</span>
+				<span class="nx">sinceId</span><span class="o">:</span> <span class="s2">&quot;&quot;</span>
+			<span class="p">});</span>
+			<span class="k">this</span><span class="p">.</span><span class="nx">collection</span><span class="p">.</span><span class="nx">reset</span><span class="p">();</span>
+		<span class="p">},</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-61'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-61'>#</a>
+      </div>
+      <p>Handle click on delete button</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>		<span class="nx">deleteSearch</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+			<span class="k">this</span><span class="p">.</span><span class="nx">model</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s2">&quot;query&quot;</span><span class="p">,</span> <span class="kc">null</span><span class="p">);</span>
+			<span class="k">this</span><span class="p">.</span><span class="nx">collection</span><span class="p">.</span><span class="nx">reset</span><span class="p">();</span>
+			<span class="k">this</span><span class="p">.</span><span class="nx">remove</span><span class="p">();</span>
+		<span class="p">},</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-62'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-62'>#</a>
+      </div>
+      <p>Nice, something changed on the collection, time
+for some updates on the counter</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>		<span class="nx">updateCounter</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+			<span class="k">this</span><span class="p">.</span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;.found&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">collection</span><span class="p">.</span><span class="nx">size</span><span class="p">());</span>
+		<span class="p">}</span>
+	<span class="p">});</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-63'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-63'>#</a>
+      </div>
+      <p>Main view. Defines main logic of the applicaiton.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>	<span class="kd">var</span> <span class="nx">BackboneDemo</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-64'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-64'>#</a>
+      </div>
+      <p>Constructor of the view</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>		<span class="nx">initialize</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-65'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-65'>#</a>
+      </div>
+      <p>This Underscore method will save the reference of "this"
+to all methods of this class, including event handlers, 
+AJAX responses, etc. Really handy 8)!</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>			<span class="nx">_</span><span class="p">.</span><span class="nx">bindAll</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+		<span class="p">},</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-66'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-66'>#</a>
+      </div>
+      <p>Declarative events</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>		<span class="nx">events</span><span class="o">:</span> <span class="p">{</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-67'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-67'>#</a>
+      </div>
+      <p>"event selector(optional)" : "methodName"</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>			<span class="s2">&quot;click div.search button.add&quot;</span><span class="o">:</span> <span class="s2">&quot;addSearch&quot;</span>
+		<span class="p">},</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-68'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-68'>#</a>
+      </div>
+      <p>Click handler of the button</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>		<span class="nx">addSearch</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-69'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-69'>#</a>
+      </div>
+      <p>Get the input value and use it to create a new Search Box</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>			<span class="k">this</span><span class="p">.</span><span class="nx">createSearch</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;div.search input:text.query&quot;</span><span class="p">).</span><span class="nx">val</span><span class="p">());</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-70'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-70'>#</a>
+      </div>
+      <p>Be nice with the users, return the focus to the input
+so they can keep adding boxes with less clicks</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>			<span class="nx">$</span><span class="p">(</span><span class="s2">&quot;div.search input:text.query&quot;</span><span class="p">).</span><span class="nx">val</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">).</span><span class="nx">focus</span><span class="p">();</span>
+		<span class="p">},</span>
+
+		<span class="nx">createSearch</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">query</span><span class="p">)</span> <span class="p">{</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-71'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-71'>#</a>
+      </div>
+      <p>Create a new Search Box using the provided query string</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>			<span class="kd">var</span> <span class="nx">search</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">TweetSearch</span><span class="p">({</span>
+				<span class="nx">query</span><span class="o">:</span> <span class="nx">query</span><span class="p">,</span>
+				<span class="nx">resultType</span><span class="o">:</span> <span class="s2">&quot;mixed&quot;</span><span class="p">,</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-72'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-72'>#</a>
+      </div>
+      <p>mixed/recent/popular</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>				<span class="nx">template</span><span class="o">:</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;[template=&#39;tweetsearch&#39;]&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">().</span><span class="nx">trim</span><span class="p">()</span>
+			<span class="p">});</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-73'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-73'>#</a>
+      </div>
+      <p>Render the box and make it appear with a fade in effect</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>			<span class="k">this</span><span class="p">.</span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;.lists&quot;</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="nx">search</span><span class="p">.</span><span class="nx">render</span><span class="p">().</span><span class="nx">el</span><span class="p">);</span>
+			<span class="nx">search</span><span class="p">.</span><span class="nx">$el</span><span class="p">.</span><span class="nx">fadeIn</span><span class="p">();</span>
+		<span class="p">}</span>
+	<span class="p">});</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-74'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-74'>#</a>
+      </div>
+      <p>On document load...</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>	<span class="nx">$</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-75'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-75'>#</a>
+      </div>
+      <p>... start the application :)</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>		<span class="kd">var</span> <span class="nx">demo</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">BackboneDemo</span><span class="p">({</span>
+			<span class="nx">el</span><span class="o">:</span> <span class="s2">&quot;body&quot;</span>
+		<span class="p">});</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-76'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-76'>#</a>
+      </div>
+      <p>Add some default elements to show something on the screen 8)</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>		<span class="nx">demo</span><span class="p">.</span><span class="nx">createSearch</span><span class="p">(</span><span class="s2">&quot;javascript&quot;</span><span class="p">);</span>
+		<span class="nx">demo</span><span class="p">.</span><span class="nx">createSearch</span><span class="p">(</span><span class="s2">&quot;php&quot;</span><span class="p">);</span>
+	<span class="p">});</span>
+
+<span class="p">})(</span><span class="nx">jQuery</span><span class="p">);</span>
+
+</pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+</div>
+</body>
