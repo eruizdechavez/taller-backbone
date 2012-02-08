@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+</head>
+<body>
+	<div>
+		<table>
+			<tr>
+				<td>Name:</td>
+				<td>
+					<input name="name" type="text" />
+				</td>
+			</tr>
+			<tr>
+				<td>Age:</td>
+				<td>
+					<input name="age" type="text" />
+				</td>
+			</tr>
+			<tr>
+				<td>Employed:</td>
+				<td>
+					<input name="employed" type="checkbox" />
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<button class="add">Add</button>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div>
+		<table class="users-table">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Age</th>
+					<th>Employed</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+			<tbody></tbody>
+		</table>
+	</div>
+	<div class="templates" style="visibility:hidden;">
+		<table>
+			<tbody data-template-name="user-row">
+				<tr data-user-id="{{id}}">
+					<td>{{name}}</td>
+					<td>{{age}}</td>
+					<td>{{employed}}</td>
+					<td><button class="delete">Delete</button></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<!-- Scripts -->
+	<script type="text/javascript" src="../twitter-search/jquery-1.7.1.js"></script>
+	<script type="text/javascript" src="../twitter-search/underscore.js"></script>
+	<script type="text/javascript" src="../twitter-search/backbone.js"></script>
+	<script type="text/javascript" src="../twitter-search/mustache.js"></script>
+	<script type="text/javascript" src="collection.js"></script>
+</body>
+</html>

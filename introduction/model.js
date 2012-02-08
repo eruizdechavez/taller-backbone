@@ -1,6 +1,6 @@
 // 
 $(function() {
-	var User = Backbone.Model.extend({
+	var UserModel = Backbone.Model.extend({
 		defaults: function() {
 			return {
 				name: "John Doe",
@@ -10,7 +10,7 @@ $(function() {
 		}
 	});
 
-	var user = new User();
+	var user = new UserModel();
 
 	function updateUser() {
 		$("span.name").html(user.attributes.name);

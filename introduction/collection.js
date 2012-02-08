@@ -1,8 +1,10 @@
 // 
 $(function() {
+
 	var UserModel = Backbone.Model.extend({
 		defaults: function() {
 			return {
+				id: null,
 				name: "John Doe",
 				age: 18 + parseInt(Math.random() * 20),
 				employed: "No"
@@ -20,27 +22,18 @@ $(function() {
 		}
 	});
 
-	var user = new UserModel();
-
-	user.on("change", updateUser);
-	
-	user.on("error", function(model, error){
-		console.log("Oops :'( " + error)
+	var UserCollection = Backbone.Collection.extend({
+		model: UserModel
 	});
 
-	function updateUser() {
-		$("span.name").html(user.get("name"));
-		$("span.age").html(user.get("age"));
-		$("span.employed").html(user.get("employed"));
-	};
+	var users = new UserCollection();
 
-	$(".update").click(function(event) {
-		user.set({
+	$(".add").click(function(event) {
+		var user = new UserModel({
 			name: $("input[name='name']").val(),
 			age: parseInt($("input[name='age']").val()),
 			employed: $("input[name='employed']").is(":checked") ? "Yes" : "No"
 		});
+		console.log(user);
 	});
-
-	updateUser();
 });
