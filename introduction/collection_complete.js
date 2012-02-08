@@ -57,7 +57,7 @@ $(function() {
 
 	function updateTable() {
 		var $tbody = $(".users-table tbody");
-		var template = $("[data-template-name='user-row']").html().trim();
+		var template = $.trim($("[data-template-name='user-row']").html() || "Row template not found!");
 
 		$tbody.empty();
 

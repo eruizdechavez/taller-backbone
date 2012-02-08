@@ -52,7 +52,7 @@
 
 			// Read the template from the HTML to keep JavaScript code
 			// organized, clean and readable
-			this.template = $("[template='tweet']").html().trim();
+			this.template = $.trim($("[template='tweet']").html() || "Tweet template not found!")
 		},
 
 		// Declarative events
@@ -329,7 +329,7 @@
 				query: query,
 				resultType: "mixed",
 				// mixed/recent/popular
-				template: $("[template='tweetsearch']").html().trim()
+				template: $.trim($("[template='tweetsearch']").html() || "Demo template not found!")
 			});
 
 			// Render the box and make it appear with a fade in effect
