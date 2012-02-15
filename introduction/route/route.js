@@ -2,8 +2,9 @@ var router = null;
 
 $(function() {
 	router = new AppRouter();
+
 	Backbone.history.start({
-		pushState: true,
+		// pushState: true,
 		root: "/taller-backbone/introduction/route/"
 	});
 });
@@ -12,9 +13,9 @@ $(function() {
 var UserModel = Backbone.Model.extend({
 	defaults: function() {
 		return {
-			name: "John Doe",
-			age: 18 + parseInt(Math.random() * 20),
-			employed: "No"
+			name: "",
+			age: 0,
+			employed: ""
 		};
 	},
 
@@ -38,58 +39,64 @@ var users = new UserCollection();
 
 var AppRouter = Backbone.Router.extend({
 	_view: null,
-	_listView: null,
+
 	_addView: null,
 	_editView: null,
+	_detailView: null,
+	_listView: null,
 
 	routes: {
 		"add": "add",
-		"view/:id": "view",
 		"edit/:id": "edit",
+		"detail/:id": "detail",
 		"*list": "list"
 	},
 
 	add: function() {
 		console.log("add");
 
-		if (this._listView == null) {
-			this._listView = new ListView({model: users});
+		if (this._addView == null) {
+			this._addView = new AddView();
 		}
 
 		this.removeOldView();
-		this._view = this._listView;
-		this.renderNewView();
-	},
-
-	view: function(id) {
-		console.log("view", id);
-
-		if (this._listView == null) {
-			this._listView = new ListView({model: users});
-		}
-
-		this.removeOldView();
-		this._view = this._listView;
+		this._view = this._addView;
 		this.renderNewView();
 	},
 
 	edit: function(id) {
 		console.log("edit", id);
 
-		if (this._listView == null) {
-			this._listView = new ListView({model: users});
+		if (this._editView == null) {
+			this._editView = new EditView();
 		}
 
 		this.removeOldView();
-		this._view = this._listView;
+		this._view = this._editView;
+		this.renderNewView();
+	},
+
+	detail: function(id) {
+		console.log("detail", id);
+
+		if (this._detailView == null) {
+			this._detailView = new DetailView();
+		}
+
+		this.removeOldView();
+		this._view = this._detailView;
 		this.renderNewView();
 	},
 
 	list: function() {
 		console.log("list");
 
+		router.navigate("", {replace: true});
+
 		if (this._listView == null) {
-			this._listView = new ListView({model: users});
+			this._listView = new ListView({
+				model: users
+			});
 		}
 
 		this.removeOldView();
@@ -122,12 +129,6 @@ var ListView = Backbone.View.extend({
 		this.model.on("remove", this.removeRow);
 	},
 
-	destroy: function() {
-		this.model.off();
-		this.remove();
-		return this;
-	},
-
 	render: function() {
 		this.$el.html(Mustache.render(this.template));
 		this.model.each(this.addRow);
@@ -136,7 +137,9 @@ var ListView = Backbone.View.extend({
 	},
 
 	addUser: function(event) {
-		router.navigate("add", true);
+		router.navigate("add", {
+			trigger: true
+		});
 	},
 
 	addRow: function(user) {
@@ -157,6 +160,81 @@ var ListView = Backbone.View.extend({
 	}
 });
 
+var AddView = Backbone.View.extend({
+	template: null,
+
+	events: {
+		"click .add": "addUser"
+	},
+
+	initialize: function() {
+		_.bindAll(this);
+		this.template = $.trim($("[data-template-name='user-form']").html() || "Row template not found!");
+	},
+
+	render: function() {
+		this.$el.html(Mustache.render(this.template));
+		this.delegateEvents();
+		return this;
+	},
+
+	addUser: function() {
+		try {
+			users.add({
+				name: $("input[name='name']").val(),
+				age: parseInt($("input[name='age']").val()),
+				employed: $("input[name='employed']").is(":checked") ? "Yes" : "No"
+			});
+			router.navigate("", {trigger: true});
+		} catch (error) {
+			console.log("Oops! " + error.message);
+		}
+	}
+});
+
+var EditView = Backbone.View.extend({
+	template: null,
+
+	events: {
+		"click .add": "saveUser"
+	},
+
+	initialize: function() {
+		_.bindAll(this);
+		this.template = $.trim($("[data-template-name='user-form']").html() || "Row template not found!");
+	},
+
+	render: function() {
+		this.$el.html(Mustache.render(this.template, this.model.toJSON()));
+		this.delegateEvents();
+		return this;
+	},
+
+	saveUser: function() {
+		
+	}
+});
+
+var DetailView = Backbone.View.extend({
+	template: null,
+
+	events: {
+		// "click .add": "addUser"
+	},
+
+	initialize: function() {
+		_.bindAll(this);
+		this.template = $.trim($("[data-template-name='user-form']").html() || "Row template not found!");
+	},
+
+	render: function() {
+		this.$el.html(Mustache.render(this.template));
+		this.delegateEvents();
+		return this;
+	}
+});
+
+
 // User View
 var UserView = Backbone.View.extend({
 	tagName: "tr",
@@ -174,6 +252,7 @@ var UserView = Backbone.View.extend({
 
 	render: function() {
 		this.$el.html(Mustache.render(this.template, this.model.toJSON()));
+		this.delegateEvents();
 		return this;
 	},
 
