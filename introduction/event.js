@@ -2,12 +2,23 @@
 $(function(){
 	
 	// jQuery
-	$(window).on("erickrdch.sayHi", function(event, target, message){
+	$(window).on("erickrdch.sayHi", function(event, target, message, dude){
 		target.html("Howdy " + message + "!");
+		alert("En el Window");
+	});
+
+	$(".buttonCont").on("erickrdch.sayHi", function(event){
+		$(this).css("background-color", "#bada55");
+		alert("En el Div");
+	});
+
+	$("body").on("erickrdch.sayHi", function(event, target, message, dude){
+		$(this).css("background-color", "#cccccc");
+		alert("En el Body");
 	});
 
 	$(".sayHi").click(function(event){
-		$(this).trigger("erickrdch.sayHi", [$(".console"), "Erick"]);
+		$(this).trigger("erickrdch.sayHi", [$(".console"), "Erick", "blashadow"]);
 	});
 
 

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<base href="http://localhost/taller-backbone/introduction/route/" />
+</head>
+<body>
+	<div class="content">
+
+	</div>
+
+	<div class="templates" style="visibility:hidden;">
+	
+		<!-- Users Table Template -->
+		<div data-template-name="users-table">
+			<button class="add">Add</button>
+			<table>
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Age</th>
+						<th>Employed</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+				<tbody></tbody>
+			</table>
+		</div>
+
+		<!-- User Row Template; Requires all the table or the browser removes the cells -->
+		<table>
+			<tbody data-template-name="user-row">
+				<tr data-user-id="{{id}}">
+					<td>{{name}}</td>
+					<td>{{age}}</td>
+					<td>{{employed}}</td>
+					<td><button class="delete">Delete</button></td>
+				</tr>
+			</tbody>
+		</table>
+
+		<!-- User Form Template -->
+		<div data-template-name="user-form">
+			<table>
+				<tr>
+					<td>Name:</td>
+					<td>
+						<input name="name" type="text" value="{{}}" />
+					</td>
+				</tr>
+				<tr>
+					<td>Age:</td>
+					<td>
+						<input name="age" type="text" value="{{}}" />
+					</td>
+				</tr>
+				<tr>
+					<td>Employed:</td>
+					<td>
+						<input name="employed" type="checkbox" {{checked}} />
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<button class="add">Add</button>
+					</td>
+				</tr>
+			</table>
+		</div>
+
+	</div>
+	<!-- Scripts -->
+	<script type="text/javascript" src="jquery-1.7.1.js"></script>
+	<script type="text/javascript" src="underscore.js"></script>
+	<script type="text/javascript" src="backbone.js"></script>
+	<script type="text/javascript" src="mustache.js"></script>
+	<script type="text/javascript" src="route.js"></script>
+</body>
+</html>
