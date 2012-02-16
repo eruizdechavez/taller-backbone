@@ -27,19 +27,6 @@ $(function() {
 	});
 
 	var users = new UserCollection();
-	users.on("add", userAdded);
-
-	function userAdded(){
-		var template = $("[data-template-name='user-row']").html().trim();
-
-		$tbody = $(".users-table > tbody");
-
-		$tbody.empty();
-
-		users.each(function(user){
-			$tbody.append(Mustache.render(template, user.toJSON()));
-		});
-	};
 
 	$(".add").click(function(event) {
 		var user = new UserModel({
@@ -47,7 +34,6 @@ $(function() {
 			age: parseInt($("input[name='age']").val()),
 			employed: $("input[name='employed']").is(":checked") ? "Yes" : "No"
 		});
-
-		users.add(user);
+		console.log(user);
 	});
 });
