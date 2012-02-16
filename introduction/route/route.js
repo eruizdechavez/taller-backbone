@@ -12,7 +12,9 @@ $(function() {
 // User Model
 var UserModel = Backbone.Model.extend({
 	defaults: function() {
+		var d = new Date();
 		return {
+			id: d.getTime(),
 			name: "",
 			age: 0,
 			employed: ""
@@ -35,26 +37,24 @@ var UserCollection = Backbone.Collection.extend({
 	model: UserModel
 });
 
+// Our actual user collection instance
 var users = new UserCollection();
 
+// A router for our app, handles changes between views
 var AppRouter = Backbone.Router.extend({
 	_view: null,
 
 	_addView: null,
 	_editView: null,
-	_detailView: null,
 	_listView: null,
 
 	routes: {
 		"add": "add",
 		"edit/:id": "edit",
-		"detail/:id": "detail",
 		"*list": "list"
 	},
 
 	add: function() {
-		console.log("add");
-
 		if (this._addView == null) {
 			this._addView = new AddView();
 		}
@@ -65,33 +65,23 @@ var AppRouter = Backbone.Router.extend({
 	},
 
 	edit: function(id) {
-		console.log("edit", id);
-
 		if (this._editView == null) {
 			this._editView = new EditView();
 		}
+
+		this._editView.model = users.find(function(item) {
+			return item.get("id") === parseInt(id);
+		});
 
 		this.removeOldView();
 		this._view = this._editView;
 		this.renderNewView();
 	},
 
-	detail: function(id) {
-		console.log("detail", id);
-
-		if (this._detailView == null) {
-			this._detailView = new DetailView();
-		}
-
-		this.removeOldView();
-		this._view = this._detailView;
-		this.renderNewView();
-	},
-
 	list: function() {
-		console.log("list");
-
-		router.navigate("", {replace: true});
+		router.navigate("", {
+			replace: true
+		});
 
 		if (this._listView == null) {
 			this._listView = new ListView({
@@ -115,7 +105,6 @@ var AppRouter = Backbone.Router.extend({
 
 // List View
 var ListView = Backbone.View.extend({
-
 	template: null,
 
 	events: {
@@ -124,7 +113,7 @@ var ListView = Backbone.View.extend({
 
 	initialize: function() {
 		_.bindAll(this);
-		this.template = $.trim($("[data-template-name='users-table']").html() || "Row template not found!");
+		this.template = $.trim($("[data-template-name='users-table']").html() || "Template not found!");
 		this.model.on("add", this.addRow);
 		this.model.on("remove", this.removeRow);
 	},
@@ -146,7 +135,7 @@ var ListView = Backbone.View.extend({
 		if (user.view == null) {
 			user.view = new UserView({
 				model: user,
-				template: $.trim($("[data-template-name='user-row'] tr").html() || "Row template not found!")
+				template: $.trim($("[data-template-name='user-row'] tr").html() || "Template not found!")
 			});
 		}
 		this.$el.find("tbody").append(user.view.render().el);
@@ -160,88 +149,13 @@ var ListView = Backbone.View.extend({
 	}
 });
 
-var AddView = Backbone.View.extend({
-	template: null,
-
-	events: {
-		"click .add": "addUser"
-	},
-
-	initialize: function() {
-		_.bindAll(this);
-		this.template = $.trim($("[data-template-name='user-form']").html() || "Row template not found!");
-	},
-
-	render: function() {
-		this.$el.html(Mustache.render(this.template));
-		this.delegateEvents();
-		return this;
-	},
-
-	addUser: function() {
-		try {
-			users.add({
-				name: $("input[name='name']").val(),
-				age: parseInt($("input[name='age']").val()),
-				employed: $("input[name='employed']").is(":checked") ? "Yes" : "No"
-			});
-			router.navigate("", {trigger: true});
-		} catch (error) {
-			console.log("Oops! " + error.message);
-		}
-	}
-});
-
-var EditView = Backbone.View.extend({
-	template: null,
-
-	events: {
-		"click .add": "saveUser"
-	},
-
-	initialize: function() {
-		_.bindAll(this);
-		this.template = $.trim($("[data-template-name='user-form']").html() || "Row template not found!");
-	},
-
-	render: function() {
-		this.$el.html(Mustache.render(this.template, this.model.toJSON()));
-		this.delegateEvents();
-		return this;
-	},
-
-	saveUser: function() {
-		
-	}
-});
-
-var DetailView = Backbone.View.extend({
-	template: null,
-
-	events: {
-		// "click .add": "addUser"
-	},
-
-	initialize: function() {
-		_.bindAll(this);
-		this.template = $.trim($("[data-template-name='user-form']").html() || "Row template not found!");
-	},
-
-	render: function() {
-		this.$el.html(Mustache.render(this.template));
-		this.delegateEvents();
-		return this;
-	}
-});
-
-
-// User View
 var UserView = Backbone.View.extend({
 	tagName: "tr",
 	template: null,
 
 	events: {
-		"click .delete": "removeView"
+		"click .delete": "removeView",
+		"click .edit": "editView"
 	},
 
 	initialize: function() {
@@ -258,5 +172,86 @@ var UserView = Backbone.View.extend({
 
 	removeView: function() {
 		this.model.collection.remove(this.model);
+	},
+
+	editView: function() {
+		router.navigate("edit/" + this.model.get("id"), {
+			trigger: true
+		});
+	}
+});
+
+var AddView = Backbone.View.extend({
+	template: null,
+
+	events: {
+		"click .add": "addUser"
+	},
+
+	initialize: function() {
+		_.bindAll(this);
+		this.template = $.trim($("[data-template-name='user-form']").html() || "Template not found!");
+	},
+
+	render: function() {
+		this.$el.html(Mustache.render(this.template, {
+			buttonClass: "add",
+			buttonLabel: "Add"
+		}));
+		this.delegateEvents();
+		return this;
+	},
+
+	addUser: function() {
+		try {
+			users.add({
+				name: $("input[name='name']").val(),
+				age: parseInt($("input[name='age']").val()),
+				employed: $("input[name='employed']").is(":checked") ? "Yes" : "No"
+			});
+			router.navigate("", {
+				trigger: true
+			});
+		} catch (error) {
+			console.log("Oops! " + error.message);
+		}
+	}
+});
+
+var EditView = Backbone.View.extend({
+	template: null,
+
+	events: {
+		"click .update": "updateUser"
+	},
+
+	initialize: function() {
+		_.bindAll(this);
+		this.template = $.trim($("[data-template-name='user-form']").html() || "Template not found!");
+	},
+
+	render: function() {
+		var data = _.extend({
+			buttonClass: "update",
+			buttonLabel: "Update"
+		}, this.model.toJSON());
+		this.$el.html(Mustache.render(this.template, data));
+		this.delegateEvents();
+		return this;
+	},
+
+	updateUser: function() {
+		try {
+			this.model.set({
+				name: $("input[name='name']").val(),
+				age: parseInt($("input[name='age']").val()),
+				employed: $("input[name='employed']").is(":checked") ? "Yes" : "No"
+			});
+			router.navigate("", {
+				trigger: true
+			});
+		} catch (error) {
+			console.log("Oops! " + error.message);
+		}
 	}
 });
